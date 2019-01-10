@@ -126,10 +126,10 @@ def win():
 #重新开始游戏初始化棋盘
 def restart():
     global QP,tag,a,b,stop,hq
-    canvas.create_rectangle(0.3*mesh,0.3*mesh,mesh*(num+0.7),mesh*(num+0.7),fill="bisque")  #重绘棋盘
+    canvas.create_rectangle(0.3*mesh,0.3*mesh,mesh*(num+0.7),mesh*(num+0.7),fill="bisque")  #重绘棋盘，目的在于清空棋盘棋子
     QP = []     
     for i in range (num):
-        QP.append([-1]*num)   #清空棋子
+        QP.append([-1]*num)   #初始化虚拟棋盘
         canvas.create_line(mesh,mesh*(i+1),mesh*num,mesh*(i+1)) #重绘棋线
         canvas.create_line(mesh*(i+1),mesh,mesh*(i+1),mesh*num)        
     tag,stop,hq = 0,0,0
@@ -153,7 +153,7 @@ if __name__=='__main__':
     px,py = 0.01*B,0.15*B
     wide,high = 0.2*B,0.08*B
 #初始化棋盘
-    #用列表QP[]标记棋格状态
+    #用虚拟棋盘列表QP[]标记棋格状态
     #-1代表该位置无棋子，0代表该位置有黑棋，1代表该位置有白棋
     QP = []
     for i in range (num):
