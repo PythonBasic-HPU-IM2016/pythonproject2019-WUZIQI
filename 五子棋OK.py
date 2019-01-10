@@ -94,7 +94,7 @@ def panduan():
                 canvas.create_line(mesh*(i+1)-Qr/2,mesh*(j+1)-Qr/2,mesh*(i+5)+Qr/2,mesh*(j+5)+Qr/2,fill="yellow")
                 win()
     for i in range (num-4):
-        for j in range (4,num):  #判断是否出现有一方"\"五子相连
+        for j in range (4,num):  #判断是否出现有一方"/"五子相连
             if QP[i][j]==QP[i+1][j-1]==QP[i+2][j-2]==QP[i+3][j-3]==QP[i+4][j-4] != -1:
                 iswin = 1
                 canvas.create_line(mesh*(i+1)-Qr/2,mesh*(j+1)+Qr/2,mesh*(i+5)+Qr/2,mesh*(j-3)-Qr/2,fill="yellow")
