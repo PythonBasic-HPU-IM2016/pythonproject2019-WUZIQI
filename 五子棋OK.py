@@ -79,6 +79,7 @@ def panduan():
         for j in range (num):    #判断是否出现有一方"—"五子相连
             if QP[i][j]==QP[i+1][j]==QP[i+2][j]==QP[i+3][j]==QP[i+4][j] != -1:
                 iswin = 1
+                #将相连的五颗棋子用黄色线条连接
                 canvas.create_line(mesh*(i+1)-Qr/2,mesh*(j+1),mesh*(i+5)+Qr/2,mesh*(j+1),fill="yellow")
                 win()
     for i in range (num):
