@@ -15,7 +15,7 @@ def callback(event):
     if 0 <= X <=17 and 0 <= Y <= 17 and \
        distance < K*Qr and stop == 0 and QP[X][Y] == -1 :
         QP[X][Y] = tag  #标记当前棋格         
-        canvas.create_oval(x-Qr,y-Qr,x+Qr,y+Qr,fill=color[tag])  #绘制棋子
+        canvas.create_oval(x-Qr,y-Qr,x+Qr,y+Qr,fill=color[tag])
         hq = 1          #标记当前可悔棋
         tag = (tag+1)%2 #更换执棋方
         a.config(text=key[tag],fg=color[tag]) #中间文字改变
@@ -55,7 +55,7 @@ def regret():
 #玩家认输
 def lose():
     global stop
-    if stop != 1:  #非游戏进行时不可认输     
+    if stop != 1:       #非游戏进行时不可认输     
         b.config(text = "认输",fg='black')
         stop,hq = 1,0   #认输后游戏结束，不可悔棋
         if tag == 0:
@@ -72,7 +72,7 @@ def lose():
 '''
 #游戏结果判断
 def panduan():
-    iswin = 0 #标记是否有一方完成五子相连，0代表否
+    iswin = 0 #标记是否有一方完成五子相连，0代表否 平局判断时调用
     #判断是否有一方获胜
     #列表QP[a][b]中必须满足 0 <= a,b <= 17，i、j严格控制 
     for i in range (num-4):
@@ -100,7 +100,7 @@ def panduan():
                 canvas.create_line(mesh*(i+1)-Qr/2,mesh*(j+1)+Qr/2,mesh*(i+5)+Qr/2,mesh*(j-3)-Qr/2,fill="yellow")
                 win()
     #判断是否平局
-    boring=[]   #遍历棋盘，记录每个棋格状态
+    boring=[]
     for i in range(num):
         for j in range(num):
             boring.append(QP[i][j])
@@ -109,7 +109,7 @@ def panduan():
 #决出胜负
 def win():
     global stop,hq
-    a.config(text=key[(tag+1)%2],fg=color[(tag+1)%2])
+    a.config(text=key[(tag+1)%2],fg=color[(tag+1)%2]) #玩家落子后身份立即转换，故获胜方为当前落子方
     b.config(text = "获胜",fg='red')
     stop,hq = 1,0 #决出胜负后游戏结束，不可悔棋
     if tag == 0:
@@ -130,7 +130,7 @@ def restart():
     QP = []     
     for i in range (num):
         QP.append([-1]*num)   #清空棋子
-        canvas.create_line(mesh,mesh*(i+1),mesh*num,mesh*(i+1))
+        canvas.create_line(mesh,mesh*(i+1),mesh*num,mesh*(i+1)) #重绘棋线
         canvas.create_line(mesh*(i+1),mesh,mesh*(i+1),mesh*num)        
     tag,stop,hq = 0,0,0
     a.config(text=key[tag],fg=color[tag])
@@ -158,9 +158,9 @@ if __name__=='__main__':
     QP = []
     for i in range (num):
         QP.append([-1]*num)
-    tk = Tk()            #建立根窗口
-    tk.geometry(str(int((num+1)*mesh+3*px))+'x'+str(int((num+1)*mesh+py+2*px)))    #主窗口大小("宽*长")
-    tk.title("五子连珠") #给窗口命名
+    tk = Tk()
+    tk.geometry(str(int((num+1)*mesh+3*px))+'x'+str(int((num+1)*mesh+py+2*px)))
+    tk.title("五子连珠") 
 #构造游戏界面
     asdf = Canvas(tk,width=(num+6)*mesh,height=(num+6)*mesh)             #asdf：窗体背景设计
     asdf.place(x=-1,y=-1)
@@ -168,21 +168,21 @@ if __name__=='__main__':
     canvas = Canvas(tk,width=str((num+1)*mesh),height=str((num+1)*mesh)) #canvas：棋盘设计
     canvas.place(x=px ,y=py)
     canvas.create_rectangle(0.3*mesh,0.3*mesh,mesh*(num+0.7),mesh*(num+0.7),fill="bisque")
-    for i in range(num):                                                 #棋格绘制
+    for i in range(num):                                                 
         canvas.create_line(mesh,mesh*(i+1),mesh*num,mesh*(i+1))          
         canvas.create_line(mesh*(i+1),mesh,mesh*(i+1),mesh*num)
-    canvas.bind("<Button-1>", callback) #<Button-1>：鼠标左击事件
+    canvas.bind("<Button-1>", callback)
 #几个按钮
-    Button(tk,text="开局 / 重新开局",command=restart).place(x=4*px,\
-                                                      y=(py-high)/2,width=wide,heigh=high)#按钮位置及尺寸
-    Button(tk,text="落子方 悔棋 ",command=regret).place(x=(num+1)*mesh-2*wide-4*px-15,\
-                                                      y=(py-high)/2,width=wide,heigh=high)
-    Button(tk,text="执棋方 认输 ",command=lose).place(x=(num+1)*mesh-wide-4*px,\
-                                                     y=(py-high)/2,width=wide,heigh=high)
+    Button(tk,text="开局 / 重新开局",command=restart).place(x=4*px,y=(py-high)/2,\
+                                                      width=wide,heigh=high)#按钮位置及尺寸
+    Button(tk,text="落子方 悔棋 ",command=regret).place(x=(num+1)*mesh-2*wide-4*px-15,y=(py-high)/2,\
+                                                      width=wide,heigh=high)
+    Button(tk,text="执棋方 认输 ",command=lose).place(x=(num+1)*mesh-wide-4*px,y=(py-high)/2,\
+                                                      width=wide,heigh=high)
 #中间的文字
     a = Label(tk,text=key[tag],fg=color[tag],bg = "pink",font = ("楷体", "18", "bold"))
     b = Label(tk,text= "落子" ,fg=color[tag],bg = "pink",font = ("楷体", "18", "bold"))
     a.place(x=3*px+wide+40    ,y=(py-high)/2+3)
     b.place(x=3*px+wide+40+55 ,y=(py-high)/2+3)
     print(messagebox.askokcancel('提示','游戏开始！黑方先行！'))
-    tk.mainloop() #创建循环事件直到关闭主窗口
+    tk.mainloop()
