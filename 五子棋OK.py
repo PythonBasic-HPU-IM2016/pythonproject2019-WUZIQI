@@ -72,6 +72,7 @@ def lose():
 '''
 #游戏结果判断
 def panduan():
+    global a,b
     iswin = 0 #标记是否有一方完成五子相连，0代表否 平局判断时调用
     #判断是否有一方获胜
     #列表QP[a][b]中必须满足 0 <= a,b <= 17，i、j严格控制 
@@ -106,6 +107,8 @@ def panduan():
         for j in range(num):
             boring.append(QP[i][j])
     if -1 not in boring and iswin != 1:  #当棋盘中不存在无棋子的棋格且双方均为完成五子相连判定为平局
+        a.config(text = "平局" ,fg="green") #玩家落子后身份立即转换，故获胜方为当前落子方
+        b.config(text = "？？！" ,fg="green")
         print(messagebox.askokcancel('游戏结束','旗鼓相当！平局！'))
 #决出胜负
 def win():
