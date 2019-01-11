@@ -16,7 +16,10 @@ def callback(event):
        distance < K*Qr and stop == 0 and QP[X][Y] == -1 :
         QP[X][Y] = tag  #标记当前棋格         
         canvas.create_oval(x-Qr,y-Qr,x+Qr,y+Qr,fill=color[tag])
-        hq = 1          #标记当前可悔棋
+        if hq == -1 :
+            hq = 0 
+        else:
+            hq = 1          #标记当前可悔棋
         tag = (tag+1)%2 #更换执棋方
         a.config(text=key[tag],fg=color[tag]) #中间文字改变
         panduan()       #调用自定义函数，判断游戏是否结束
@@ -28,7 +31,7 @@ def regret():
         tag = (tag+1)%2     #悔棋后需重新落子，执棋方改变
         a.config(text=key[tag],fg=color[tag])
         QP[tagx][tagy] = -1 #悔棋后该棋格状态改变
-        hq = 0              #一个回合只允许悔棋一次
+        hq = -1              #一个回合只允许悔棋一次
         x,y = mesh*(tagx+1),mesh*(tagy+1)
         #棋盘恢复
         #绘制一个棋盘颜色的矩形覆盖棋子
@@ -54,7 +57,7 @@ def regret():
         print(messagebox.askokcancel('提示','此时不能悔棋，请继续游戏或重新开局！'))
 #玩家认输
 def lose():
-    global stop
+    global stop,hq
     if stop != 1:       #非游戏进行时不可认输     
         b.config(text = "认输",fg='black')
         stop,hq = 1,0   #认输后游戏结束，不可悔棋
