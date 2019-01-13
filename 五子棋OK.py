@@ -12,7 +12,7 @@ def callback(event):
     distance = (errorX ** 2 + errorY ** 2) ** 0.5     #点击处与落子处距离差值
     #满足以下四点时可落子
     # 1.棋子落在棋盘上 2.差值不敏感 3.游戏正在进行 4.当前棋格无子
-    if 0 <= X <=17 and 0 <= Y <= 17 and \
+    if 0 <= X <= num-1 and 0 <= Y <= num-1 and \
        distance < K*Qr and stop == 0 and QP[X][Y] == -1 :
         QP[X][Y] = tag  #标记当前棋格         
         canvas.create_oval(x-Qr,y-Qr,x+Qr,y+Qr,fill=color[tag])
@@ -49,9 +49,9 @@ def regret():
             canvas.create_line(x,y-mesh/2,x,y,fill="bisque")
         if x == 0:
             canvas.create_line(x-mesh/2,y,x,y,fill="bisque")
-        if y == 17:
+        if y == num-1:
             canvas.create_line(x,y,x,y+mesh/2,fill="bisque")
-        if x == 17:
+        if x == num-1:
             canvas.create_line(x,y,x+mesh/2,y,fill="bisque")
     else:
         print(messagebox.askokcancel('提示','此时不能悔棋，请继续游戏或重新开局！'))
@@ -78,7 +78,7 @@ def panduan():
     global a,b
     iswin = 0 #标记是否有一方完成五子相连，0代表否 平局判断时调用
     #判断是否有一方获胜
-    #列表QP[a][b]中必须满足 0 <= a,b <= 17，i、j严格控制 
+    #列表QP[a][b]中必须满足 0 <= a,b <= num-1，i、j严格控制 
     for i in range (num-4):
         for j in range (num):    #判断是否出现有一方"—"五子相连
             if QP[i][j]==QP[i+1][j]==QP[i+2][j]==QP[i+3][j]==QP[i+4][j] != -1:
